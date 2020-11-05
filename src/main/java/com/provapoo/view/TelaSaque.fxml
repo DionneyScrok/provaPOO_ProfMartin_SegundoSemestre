@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="321.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaCorrenteController">
+   <children>
+      <Button fx:id="btnSacar" layoutX="102.0" layoutY="108.0" mnemonicParsing="false" onAction="#sacar" text="Sacar" />
+      <TextField fx:id="txtNumContaSacar" layoutX="86.0" layoutY="35.0" />
+      <TextField fx:id="txtValorSaque" layoutX="86.0" layoutY="68.0" />
+      <Label layoutX="27.0" layoutY="39.0" text="Conta" />
+      <Label layoutX="27.0" layoutY="72.0" text="Valor" />
+   </children>
+</AnchorPane>
