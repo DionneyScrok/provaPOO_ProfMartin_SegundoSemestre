@@ -4,13 +4,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="321.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaCorrenteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="215.0" prefWidth="237.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaCorrenteController">
    <children>
-      <Button fx:id="btnSacar" layoutX="102.0" layoutY="108.0" mnemonicParsing="false" onAction="#sacar" text="Sacar" />
-      <TextField fx:id="txtNumContaSacar" layoutX="86.0" layoutY="35.0" />
-      <TextField fx:id="txtValorSaque" layoutX="86.0" layoutY="68.0" />
-      <Label layoutX="27.0" layoutY="39.0" text="Conta" />
-      <Label layoutX="27.0" layoutY="72.0" text="Valor" />
+      <Button fx:id="btnSacar" layoutX="51.0" layoutY="153.0" mnemonicParsing="false" onAction="#sacar" text="Sacar" />
+      <TextField fx:id="txtNumContaSacar" layoutX="73.0" layoutY="46.0" />
+      <TextField fx:id="txtValorSaque" layoutX="73.0" layoutY="79.0" />
+      <Label layoutX="14.0" layoutY="50.0" text="Conta" />
+      <Label layoutX="14.0" layoutY="83.0" text="Valor" />
+      <TextField fx:id="txtSenhaSaque" layoutX="73.0" layoutY="112.0" />
+      <Label layoutX="14.0" layoutY="116.0" text="Senha" />
+      <Label layoutX="74.0" text="Sacar Cc" textFill="#007510">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

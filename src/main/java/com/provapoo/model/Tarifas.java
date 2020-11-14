@@ -2,7 +2,6 @@ package com.provapoo.model;
 
 public interface Tarifas {
 
-	public abstract void tarifaSaque();
-
-	public abstract void tarifaTransferencia();
+	public double tarifaSaque(double valor);
+	public double tarifaTransferencia(double valor);
 }

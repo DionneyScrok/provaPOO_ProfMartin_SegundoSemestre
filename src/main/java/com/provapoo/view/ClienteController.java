@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 
 public class ClienteController implements Initializable{
@@ -52,16 +53,51 @@ public class ClienteController implements Initializable{
 		ClienteDAO clientedao = new ClienteDAO();
 		clientedao.inserirCliente(cliente);								
 	}
-	public void depositoContaCorrente(ActionEvent event) {
-		Cliente cliente = pegaCliente();
-		
-		
-	}
 	
 	private Cliente pegaCliente() {
 
 		return new Cliente(cliNome.getText(), cliCpf.getText(),cliTelefone.getText(),cliEmail.getText(),cliProfissao.getText(), cliEndereco.getText());
 	}
+	
+	
+	//LISTAR CLIENTES
+	@FXML
+    private Button btnPesquisarCPF;
+
+    @FXML
+    private TextField txtBuscarCPF;
+
+    @FXML
+    private TableColumn<?, ?> columnNome;
+
+    @FXML
+    private TableColumn<?, ?> columnCpf;
+
+    @FXML
+    private TableColumn<?, ?> columnProfissao;
+
+    @FXML
+    private TableColumn<?, ?> columnEmail;
+
+    @FXML
+    private TableColumn<?, ?> columnEndereco;
+
+    @FXML
+    private TableColumn<?, ?> columnTelefone;
+
+    @FXML
+    private Button btnEditarCliente;
+
+    @FXML
+    void chamaTelaEdicaoCliente(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pesquisarCliente(ActionEvent event) {
+
+    }
+
 	
 	
 	

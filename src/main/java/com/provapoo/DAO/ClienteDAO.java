@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.provapoo.db.ConexaoHSQLDB;
 import com.provapoo.model.Cliente;
-import com.provapoo.model.ContaCorrente;
 
 public class ClienteDAO extends ConexaoHSQLDB {
 	final String Insert_SQL_Cliente = " INSERT INTO Cliente (nome, cpf, email, telefone, endereco, profissao ) VALUES (?, ?, ?, ?, ?, ? ) ";
@@ -15,7 +16,7 @@ public class ClienteDAO extends ConexaoHSQLDB {
 	final String SQL_SELECT = " SELECT * FROM Cliente ";
 	final String SQL_SELECT_CLIENTE_ID = " SELECT * FROM Cliente WHERE ID =? ";
 	final String SQL_ALTERA_CLIENTE = " UPDATE Cliente SET NOME =?, CPF =?, EMAIL =?, ENDERECO =?, TELEFONE =?, PROFISSAO=? WHERE ID =? ";
-	final String SQL_DELETA_CLIENTE = "DELETE FROM Cliente WHERE ID = ?";
+	final String SQL_DELETA_CLIENTE = "DELETE FROM Cliente WHERE Cpf = ?";
 	final String SQL_FIND_CPFCliente = "Select * FROM Cliente WHERE cpf =?";
 
 	public boolean inserirCliente(Cliente cliente) {
@@ -40,7 +41,8 @@ public class ClienteDAO extends ConexaoHSQLDB {
 
 	public Cliente buscaClienteByCPF(String cpf) {
 		Cliente cli = null;
-		try (Connection connection = connectar(); PreparedStatement pst = connection.prepareStatement(SQL_FIND_CPFCliente);) {
+		try (Connection connection = connectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_FIND_CPFCliente);) {
 
 			pst.setString(1, cpf);
 			ResultSet rs = pst.executeQuery();
@@ -62,6 +64,40 @@ public class ClienteDAO extends ConexaoHSQLDB {
 
 		return cli;
 
+	}
+
+	public List<Cliente> listarClientes() {
+		List<Cliente> listaCliente = new ArrayList<Cliente>();
+		try (Connection connection = this.connectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_SELECT);) {
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Cliente cliente = new Cliente();
+				cliente.setId(rs.getInt("ID"));
+				cliente.setNome(rs.getString("NOME"));
+				cliente.setCpf(rs.getString("CPF"));
+				cliente.setProfissao(rs.getString("PROFISSAO"));
+				cliente.setEmail(rs.getString("EMAIL"));
+				cliente.setEndereco(rs.getString("ENDERECO"));
+				cliente.setTelefone(rs.getString("TELEFONE"));
+				listaCliente.add(cliente);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listaCliente;
+	}
+
+	public boolean removeCliente(String cpf) {
+		try (Connection connection = this.connectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_DELETA_CLIENTE);) {
+			pst.setString(1, cpf);
+			pst.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return true;
 	}
 
 }

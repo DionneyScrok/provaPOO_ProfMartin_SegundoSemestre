@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="212.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaCorrenteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaCorrenteController">
    <children>
-      <Button fx:id="btnTranferir" layoutX="40.0" layoutY="167.0" mnemonicParsing="false" onAction="#tranferir" text="Tranferir" />
-      <Button fx:id="btnSair" layoutX="166.0" layoutY="167.0" mnemonicParsing="false" text="Sair" />
-      <TextField fx:id="txtcontaOrigem" layoutX="70.0" layoutY="58.0" />
-      <TextField fx:id="txtvalorOrigem" layoutX="70.0" layoutY="124.0" />
-      <TextField fx:id="txtcontaDestino" layoutX="70.0" layoutY="94.0" />
+      <Button fx:id="btnTranferir" layoutX="62.0" layoutY="196.0" mnemonicParsing="false" onAction="#tranferir" text="Tranferir" />
+      <Button fx:id="btnSair" layoutX="165.0" layoutY="196.0" mnemonicParsing="false" text="Sair" />
+      <TextField fx:id="txtcontaOrigemCc" layoutX="70.0" layoutY="58.0" />
+      <TextField fx:id="txtvalorOrigemCc" layoutX="70.0" layoutY="124.0" />
+      <TextField fx:id="txtcontaDestinoCc" layoutX="70.0" layoutY="94.0" />
       <Label layoutX="14.0" layoutY="62.0" text="Origem:" />
       <Label layoutX="21.0" layoutY="128.0" text="Valor:" />
       <Label layoutX="14.0" layoutY="98.0" text="Destino:" />
@@ -21,5 +21,7 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <TextField fx:id="txtSenhaTranferenciaCc" layoutX="70.0" layoutY="161.0" />
+      <Label layoutX="20.0" layoutY="165.0" text="Senha:" />
    </children>
 </AnchorPane>

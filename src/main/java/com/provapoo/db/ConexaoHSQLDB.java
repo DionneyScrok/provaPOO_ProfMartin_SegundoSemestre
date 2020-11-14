@@ -14,7 +14,7 @@ public class ConexaoHSQLDB {
 		
 		try {
 			System.out.println("Connectando...");
-			return DriverManager.getConnection(URL, usuario, senha);
+			return DriverManager.getConnection(URL, usuario, senha);			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -8,50 +8,83 @@ import java.sql.SQLException;
 import com.provapoo.db.ConexaoHSQLDB;
 import com.provapoo.model.Autenticavel;
 import com.provapoo.model.ContaPoupanca;
+import com.provapoo.model.GeradorDeContas;
 import com.provapoo.model.Tarifas;
 
-public class ContaPoupancaDAO extends ConexaoHSQLDB implements Tarifas, Autenticavel {
+public class ContaPoupancaDAO extends ConexaoHSQLDB implements Autenticavel, Tarifas {
 
-	final String Insert_SQL = " INSERT INTO CONTACORRENTE (numcontacor, agencia, saldo, clienteid) VALUES (?, ?, ?, ?) ";
-	final String SQL_FIND_CPF_CP = "Select * FROM CONTAPOUPANCA WHERE numcontacor =?";
-	final String SQL_UPDATE_SALDO = "UPDATE CONTAPOUPANCA SET SALDO = ? WHERE numcontacor = ?";
+	final String Insert_SQL = " INSERT INTO CONTAPOUPANCA (numcontapoup, agencia, saldo, clienteid, senha) VALUES (?, ?, ?, ?, ?) ";
+	final String Select_FindByConta = "Select * from CONTAPOUPANCA WHERE numcontapoup = ?";
+	final String SQL_UPDATE_SALDO = "UPDATE CONTAPOUPANCA SET SALDO = ? WHERE numcontapoup = ?";
 
 	@Override
-	public boolean autentica(String numConta, String senha) {
-		ContaPoupanca cp = null;
-		try (Connection connection = connectar();
-				PreparedStatement pst = connection.prepareStatement(SQL_FIND_CPF_CP);){
+	public double tarifaSaque(double valor) {
+		// TODO Auto-generated method stub
+		return valor - 5;
+	}
 
-			
-		}catch(SQLException e) {
-			
+	@Override
+	public double tarifaTransferencia(double valor) {
+		// TODO Auto-generated method stub
+		return valor - 15;
+	}
+
+	@Override
+	public boolean autentica(String conta, String senha) {
+		ContaPoupanca cp = new ContaPoupanca();
+		try (Connection connection = connectar();
+				PreparedStatement pst = connection.prepareStatement(Select_FindByConta);) {
+			pst.setString(1, conta);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				cp.setId(rs.getInt("id"));
+				cp.setNumConta(rs.getString("numcontapoup"));
+				cp.setAgencia(rs.getInt("agencia"));
+				cp.setIdCliente(rs.getLong("clienteid"));
+				cp.setSaldo(rs.getDouble("saldo"));
+				cp.setSenha(rs.getString("senha"));
+
+			}
+
+		} catch (SQLException e) {
+
 		}
-		return false;
+
+		if (cp.getSenha().equals(senha)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	@Override
-	public void tarifaSaque() {
-		// TODO Auto-generated method stub
+	public void inserirCp(ContaPoupanca cp) {
+		try (Connection connection = connectar(); PreparedStatement pst = connection.prepareStatement(Insert_SQL);) {
+			pst.setString(1, cp.getNumConta());
+			pst.setInt(2, cp.getAgencia());
+			pst.setDouble(3, cp.getSaldo());
+			pst.setLong(4, cp.getIdCliente());
+			pst.setNString(5, cp.getSenha());
+			pst.executeUpdate();
+			GeradorDeContas geraConta = new GeradorDeContas();
+			geraConta.geraConta();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
-	@Override
-	public void tarifaTransferencia() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public ContaPoupanca findyByConta(String conta) {
+	public ContaPoupanca findByConta(String conta) {
 		ContaPoupanca cp = null;
 		try (Connection connection = connectar();
-				PreparedStatement pst = connection.prepareStatement(SQL_FIND_CPF_CP);) {
+				PreparedStatement pst = connection.prepareStatement(Select_FindByConta);) {
 			pst.setString(1, conta);
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				cp = new ContaPoupanca();
 				cp.setId(rs.getInt("id"));
-				cp.setNumConta(rs.getString("numcontacor"));
+				cp.setNumConta(rs.getString("numcontapoup"));
 				cp.setAgencia(rs.getInt("agencia"));
+				cp.setIdCliente(rs.getLong("clienteid"));
 				cp.setSaldo(rs.getDouble("saldo"));
 			}
 
@@ -62,7 +95,7 @@ public class ContaPoupancaDAO extends ConexaoHSQLDB implements Tarifas, Autentic
 
 	}
 
-	public void deposita(ContaPoupanca cp, double valor) {
+	public void depositaCP(ContaPoupanca cp, double valor) {
 		try (Connection connection = connectar();
 				PreparedStatement pst = connection.prepareStatement(SQL_UPDATE_SALDO);) {
 			System.out.println("Entro no deposita");
@@ -74,16 +107,16 @@ public class ContaPoupancaDAO extends ConexaoHSQLDB implements Tarifas, Autentic
 		}
 	}
 
-	public void sacar(ContaPoupanca cp, double valor) {
+	public void sacarCP(ContaPoupanca cp, double valor) {
 		try (Connection connection = connectar();
 				PreparedStatement pst = connection.prepareStatement(SQL_UPDATE_SALDO);) {
-			System.out.println("Entro no sacar");
-			pst.setDouble(1, cp.getSaldo() - valor);
+			System.out.println("Entro no saque");
+			pst.setDouble(1, cp.getSaldo() - tarifaSaque(valor));
 			pst.setNString(2, cp.getNumConta());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 
 		}
-
 	}
+
 }

@@ -1,21 +1,26 @@
 package com.provapoo.model;
 
 public class ContaPoupanca extends Conta {
-	String senha;
-
-	public ContaPoupanca(long id, double saldo, int agencia, String numero, Cliente titular, String senha) {
-		super(id, saldo, agencia, numero, titular);
-		this.senha = senha;
-	}
 
 	public ContaPoupanca() {
+		super();
 	}
 
-	public String getSenha() {
-		return null;
+	public ContaPoupanca(long id, double saldo, int agencia, String numConta, long idCliente, Cliente titular,
+			String senha) {
+		super(id, saldo, agencia, numConta, idCliente, titular, senha);		
 	}
-	public void setSenha(String senha) {
-		this.senha = senha;
+
+	public ContaPoupanca(int agencia, String numConta, long idCliente, Cliente titular, String senha, double saldo) {
+		super(agencia, numConta, idCliente, titular, senha, saldo);
+		// TODO Auto-generated constructor stub
 	}
+
+
+
+	
+	
+	
+
 
 }
