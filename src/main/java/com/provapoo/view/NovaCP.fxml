@@ -2,17 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaPoupancaController">
    <children>
       <Button fx:id="btnCriarCp" layoutX="130.0" layoutY="189.0" mnemonicParsing="false" onAction="#novaContaPoupanca" text="Criar" />
-      <TextField fx:id="txtCpfClienteNewCp" layoutX="130.0" layoutY="80.0" />
-      <TextField fx:id="txtSenhaNewCp" layoutX="130.0" layoutY="115.0" />
-      <TextField fx:id="txtDepInicialCp" layoutX="130.0" layoutY="149.0" />
+      <TextField fx:id="txtCpfClienteNewCp" layoutX="130.0" layoutY="80.0" onKeyReleased="#tfMaskCpf" />
       <Label layoutX="59.0" layoutY="84.0" text="Cpf Cliente" />
       <Label layoutX="54.0" layoutY="119.0" text="Nova Senha" />
       <Label layoutX="35.0" layoutY="153.0" text="Deposito inicial" />
@@ -21,5 +19,8 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <PasswordField fx:id="txtSenhaNewCp" layoutX="130.0" layoutY="115.0" />
+      <TextField fx:id="txtDepInicialCp" layoutX="130.0" layoutY="149.0" />
+      <Button fx:id="btnSair" layoutX="184.0" layoutY="189.0" mnemonicParsing="false" onAction="#voltarInicio" text="Sair" />
    </children>
 </AnchorPane>

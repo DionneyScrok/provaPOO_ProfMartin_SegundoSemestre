@@ -1,5 +1,6 @@
 package com.ClienteTabela;
 
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -12,8 +13,9 @@ public class ClienteTabela {
 	private final SimpleStringProperty email;
 	private final SimpleStringProperty endereco;
 	private final SimpleStringProperty telefone;
+	private final SimpleStringProperty status;
 	
-	public ClienteTabela(int id, String nome, String cpf, String profissao, String email,String endereco, String telefone) {
+	public ClienteTabela(int id, String nome, String cpf, String profissao, String email,String endereco, String telefone, String status) {
 		super();
 		this.id = new SimpleIntegerProperty(id);
 		this.nome = new SimpleStringProperty(nome);
@@ -22,6 +24,12 @@ public class ClienteTabela {
 		this.email = new SimpleStringProperty(email);
 		this.endereco = new SimpleStringProperty(endereco);
 		this.telefone = new SimpleStringProperty(telefone);
+		this.status = new SimpleStringProperty(status);
+	}
+	
+
+	public String getStatus() {
+		return status.get();
 	}
 
 

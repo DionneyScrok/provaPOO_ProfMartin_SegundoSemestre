@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -9,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaCorrenteController">
    <children>
       <Button fx:id="btnTranferir" layoutX="62.0" layoutY="196.0" mnemonicParsing="false" onAction="#tranferir" text="Tranferir" />
-      <Button fx:id="btnSair" layoutX="165.0" layoutY="196.0" mnemonicParsing="false" text="Sair" />
+      <Button fx:id="btnSair" layoutX="165.0" layoutY="196.0" mnemonicParsing="false" onAction="#fecharSair" text="Sair" />
       <TextField fx:id="txtcontaOrigemCc" layoutX="70.0" layoutY="58.0" />
       <TextField fx:id="txtvalorOrigemCc" layoutX="70.0" layoutY="124.0" />
       <TextField fx:id="txtcontaDestinoCc" layoutX="70.0" layoutY="94.0" />
@@ -21,7 +22,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSenhaTranferenciaCc" layoutX="70.0" layoutY="161.0" />
       <Label layoutX="20.0" layoutY="165.0" text="Senha:" />
+      <PasswordField fx:id="txtSenhaTranferenciaCc" layoutX="70.0" layoutY="161.0" />
    </children>
 </AnchorPane>

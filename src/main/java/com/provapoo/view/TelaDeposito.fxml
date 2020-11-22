@@ -6,18 +6,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="288.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaCorrenteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ContaCorrenteController">
    <children>
-      <Button fx:id="btnDeposita" layoutX="132.0" layoutY="130.0" mnemonicParsing="false" onAction="#novaContaCorrente" text="AtivarContaCorrente" />
-      <Button fx:id="btnNovoDeposito" layoutX="132.0" layoutY="163.0" mnemonicParsing="false" onAction="#depositoContaCorrente" text="NovoDeposito" />
-      <Label layoutX="19.0" layoutY="65.0" text="Numero da Conta:" />
-      <Label layoutX="24.0" layoutY="103.0" text="Valor à depositar:" />
-      <TextField fx:id="txtNumConta" layoutX="120.0" layoutY="61.0" />
-      <TextField fx:id="txtValorDep" layoutX="120.0" layoutY="99.0" />
-      <Label layoutX="107.0" layoutY="14.0" text="Depositar" textFill="#019710">
+      <Button fx:id="btnNovoDeposito" layoutX="31.0" layoutY="133.0" mnemonicParsing="false" onAction="#depositoContaCorrente" prefHeight="27.0" prefWidth="93.0" text="NovoDeposito" />
+      <Label layoutX="12.0" layoutY="64.0" text="Numero da Conta:" />
+      <Label layoutX="17.0" layoutY="102.0" text="Valor à depositar:" />
+      <TextField fx:id="txtNumConta" layoutX="113.0" layoutY="60.0" />
+      <TextField fx:id="txtValorDep" layoutX="113.0" layoutY="98.0" />
+      <Label layoutX="75.0" layoutY="13.0" text="Depositar Cc" textFill="#019710">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Label>
+      <Button fx:id="btnSair" layoutX="152.0" layoutY="133.0" mnemonicParsing="false" onAction="#fecharSair" prefHeight="27.0" prefWidth="93.0" text="Sair" />
    </children>
 </AnchorPane>

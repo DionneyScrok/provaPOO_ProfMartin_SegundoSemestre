@@ -7,29 +7,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="272.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.TelaPrincipalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.TelaPrincipalController">
    <children>
       <Label fx:id="nContas" layoutX="301.0" layoutY="222.0" text="Contas Correntes:" />
-      <TitledPane fx:id="PainelContaCorrente" animated="false" layoutX="14.0" layoutY="70.0" prefHeight="188.0" prefWidth="130.0" text="ContaCorrente">
+      <TitledPane fx:id="PainelContaCorrente" animated="false" layoutX="14.0" layoutY="70.0" prefHeight="211.0" prefWidth="130.0" text="ContaCorrente">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="140.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="134.0" prefWidth="128.0">
                <children>
-                  <Button fx:id="btnDepositar" layoutX="16.0" layoutY="57.0" mnemonicParsing="false" onAction="#chamaTelaDeposito" prefHeight="17.0" prefWidth="95.0" text="Depositar" />
-                  <Button fx:id="btnTransferir" layoutX="15.0" layoutY="94.0" mnemonicParsing="false" onAction="#chamaTelaTranferencia" prefHeight="17.0" prefWidth="98.0" text="Transferir" />
-                  <Button fx:id="btnSacar" layoutX="15.0" layoutY="123.0" mnemonicParsing="false" onAction="#chamaTelaSacarContaCorrente" prefHeight="9.0" prefWidth="98.0" text="Sacar" />
-                  <Button fx:id="btnNovaContaCorrente" layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#chamaTelaNovaContaCorrente" prefHeight="25.0" prefWidth="96.0" text="Nova " />
+                  <Button fx:id="btnDepositar" layoutX="17.0" layoutY="46.0" mnemonicParsing="false" onAction="#chamaTelaDeposito" prefHeight="17.0" prefWidth="95.0" text="Depositar" />
+                  <Button fx:id="btnTransferir" layoutX="15.0" layoutY="80.0" mnemonicParsing="false" onAction="#chamaTelaTranferencia" prefHeight="17.0" prefWidth="98.0" text="Transferir" />
+                  <Button fx:id="btnSacar" layoutX="16.0" layoutY="112.0" mnemonicParsing="false" onAction="#chamaTelaSacarContaCorrente" prefHeight="9.0" prefWidth="98.0" text="Sacar" />
+                  <Button fx:id="btnNovaContaCorrente" layoutX="16.0" layoutY="14.0" mnemonicParsing="false" onAction="#chamaTelaNovaContaCorrente" prefHeight="25.0" prefWidth="96.0" text="Nova " />
+                  <Button fx:id="btnTransferiCCparaCP" layoutX="12.0" layoutY="146.0" mnemonicParsing="false" onAction="#chamaTelaTranferirPoupanca" prefHeight="25.0" prefWidth="105.0" text="Tranferir p/ CP" />
                </children>
             </AnchorPane>
         </content>
       </TitledPane>
-      <TitledPane fx:id="PainelContaCorrente1" animated="false" layoutX="153.0" layoutY="70.0" prefHeight="188.0" prefWidth="138.0" text="ContaPoupança">
+      <TitledPane fx:id="PainelContaCorrente1" animated="false" layoutX="153.0" layoutY="70.0" prefHeight="211.0" prefWidth="138.0" text="ContaPoupança">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="187.0" prefWidth="154.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="194.0" prefWidth="136.0">
                <children>
-                  <Button fx:id="btnDepositarPoupanca" layoutX="16.0" layoutY="56.0" mnemonicParsing="false" onAction="#chamaTelaDepositoPoupanca" prefHeight="25.0" prefWidth="101.0" text="Depositar" />
-                  <Button fx:id="btnTransferirPoupanca" layoutX="15.0" layoutY="88.0" mnemonicParsing="false" onAction="#chamaTelaTranferenciaPoupanca" prefHeight="25.0" prefWidth="104.0" text="Transferir" />
-                  <Button fx:id="btnSacarPoupanca" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" onAction="#chamaTelaSacar" prefHeight="17.0" prefWidth="105.0" text="Sacar" />
-                  <Button fx:id="btnNovaContaPoupanca" layoutX="16.0" layoutY="21.0" mnemonicParsing="false" onAction="#chamaTelaNovaContaPoupanca" prefHeight="25.0" prefWidth="101.0" text="Nova" />
+                  <Button fx:id="btnDepositarPoupanca" layoutX="15.0" layoutY="49.0" mnemonicParsing="false" onAction="#chamaTelaDepositoPoupanca" prefHeight="25.0" prefWidth="101.0" text="Depositar" />
+                  <Button fx:id="btnTransferirPoupanca" layoutX="16.0" layoutY="80.0" mnemonicParsing="false" onAction="#chamaTelaTranferenciaPoupanca" prefHeight="25.0" prefWidth="104.0" text="Transferir" />
+                  <Button fx:id="btnSacarPoupanca" layoutX="16.0" layoutY="111.0" mnemonicParsing="false" onAction="#chamaTelaSacar" prefHeight="17.0" prefWidth="105.0" text="Sacar" />
+                  <Button fx:id="btnNovaContaPoupanca" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#chamaTelaNovaContaPoupanca" prefHeight="25.0" prefWidth="101.0" text="Nova" />
+                  <Button fx:id="btnTransferiCPparaCC" layoutX="16.0" layoutY="146.0" mnemonicParsing="false" onAction="#chamaTelaTranferirParaCorrente" prefHeight="25.0" prefWidth="105.0" text="Tranferir p/ CC" />
                </children>
             </AnchorPane>
          </content>
@@ -49,11 +51,12 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="nContas1" layoutX="302.0" layoutY="199.0" text="Contas Poupança:" />
+      <Label layoutX="302.0" layoutY="199.0" text="Contas Poupança:" />
       <Label layoutX="302.0" layoutY="174.0" text="Clientes:" />
       <Label fx:id="labelQtdClientes" layoutX="353.0" layoutY="174.0" text="Label" />
       <Label fx:id="labelQtdPoupanca" layoutX="401.0" layoutY="199.0" text="Label" />
       <Label fx:id="labelQtdCCorrente" layoutX="401.0" layoutY="222.0" text="Label" />
+      <Button fx:id="btnSair" layoutX="302.0" layoutY="248.0" mnemonicParsing="false" onAction="#sairFechar" prefHeight="33.0" prefWidth="58.0" text="Sair" />
    </children>
    <padding>
       <Insets bottom="5.0" top="5.0" />

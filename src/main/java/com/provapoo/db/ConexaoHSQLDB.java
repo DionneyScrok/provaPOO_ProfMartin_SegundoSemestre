@@ -17,7 +17,6 @@ public class ConexaoHSQLDB {
 			return DriverManager.getConnection(URL, usuario, senha);			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Falha na conexão");
 			throw new Error("Sql Exception");
 			

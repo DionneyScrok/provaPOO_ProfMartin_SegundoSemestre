@@ -4,18 +4,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.provapoo.db.ConexaoHSQLDB;
 import com.provapoo.model.Autenticavel;
 import com.provapoo.model.ContaPoupanca;
-import com.provapoo.model.GeradorDeContas;
 import com.provapoo.model.Tarifas;
+
 
 public class ContaPoupancaDAO extends ConexaoHSQLDB implements Autenticavel, Tarifas {
 
 	final String Insert_SQL = " INSERT INTO CONTAPOUPANCA (numcontapoup, agencia, saldo, clienteid, senha) VALUES (?, ?, ?, ?, ?) ";
 	final String Select_FindByConta = "Select * from CONTAPOUPANCA WHERE numcontapoup = ?";
 	final String SQL_UPDATE_SALDO = "UPDATE CONTAPOUPANCA SET SALDO = ? WHERE numcontapoup = ?";
+	final String SQL_SELECT = "Select * from ContaPoupanca";
 
 	@Override
 	public double tarifaSaque(double valor) {
@@ -31,30 +34,15 @@ public class ContaPoupancaDAO extends ConexaoHSQLDB implements Autenticavel, Tar
 
 	@Override
 	public boolean autentica(String conta, String senha) {
-		ContaPoupanca cp = new ContaPoupanca();
-		try (Connection connection = connectar();
-				PreparedStatement pst = connection.prepareStatement(Select_FindByConta);) {
-			pst.setString(1, conta);
-			ResultSet rs = pst.executeQuery();
-			while (rs.next()) {
-				cp.setId(rs.getInt("id"));
-				cp.setNumConta(rs.getString("numcontapoup"));
-				cp.setAgencia(rs.getInt("agencia"));
-				cp.setIdCliente(rs.getLong("clienteid"));
-				cp.setSaldo(rs.getDouble("saldo"));
-				cp.setSenha(rs.getString("senha"));
+		ContaPoupanca cc = findByConta(conta);
 
-			}
-
-		} catch (SQLException e) {
-
-		}
-
-		if (cp.getSenha().equals(senha)) {
+		System.out.println(cc.getSenha() + " / " + senha);
+		if (cc.getSenha().equals(senha)) {
 			return true;
 		} else {
 			return false;
 		}
+
 	}
 
 	public void inserirCp(ContaPoupanca cp) {
@@ -65,8 +53,6 @@ public class ContaPoupancaDAO extends ConexaoHSQLDB implements Autenticavel, Tar
 			pst.setLong(4, cp.getIdCliente());
 			pst.setNString(5, cp.getSenha());
 			pst.executeUpdate();
-			GeradorDeContas geraConta = new GeradorDeContas();
-			geraConta.geraConta();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -86,6 +72,7 @@ public class ContaPoupancaDAO extends ConexaoHSQLDB implements Autenticavel, Tar
 				cp.setAgencia(rs.getInt("agencia"));
 				cp.setIdCliente(rs.getLong("clienteid"));
 				cp.setSaldo(rs.getDouble("saldo"));
+				cp.setSenha(rs.getNString("senha"));
 			}
 
 		} catch (SQLException e) {
@@ -119,4 +106,24 @@ public class ContaPoupancaDAO extends ConexaoHSQLDB implements Autenticavel, Tar
 		}
 	}
 
+	public List<ContaPoupanca> listarContaPoupanca() {
+		List<ContaPoupanca> listaCp = new ArrayList<ContaPoupanca>();
+		try (Connection connection = this.connectar();
+				PreparedStatement pst = connection.prepareStatement(SQL_SELECT);) {
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				ContaPoupanca Cp = new ContaPoupanca();
+				Cp.setId(rs.getInt("ID"));
+				Cp.setAgencia(rs.getInt("AGENCIA"));
+				Cp.setNumConta(rs.getString("NUMCONTAPOUP"));
+				Cp.setSaldo(rs.getDouble("SALDO"));
+
+				listaCp.add(Cp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listaCp;
+	}
 }

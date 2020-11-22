@@ -1,63 +1,96 @@
 package com.provapoo.view;
 
+import java.io.IOException;
+
 import com.provapoo.DAO.ClienteDAO;
 import com.provapoo.DAO.ContaCorrenteDAO;
 import com.provapoo.DAO.ContaPoupancaDAO;
 import com.provapoo.model.Cliente;
 import com.provapoo.model.ContaCorrente;
 import com.provapoo.model.ContaPoupanca;
-import com.provapoo.model.GeradorDeContas;
 import com.provapoo.model.Tarifas;
 
+import Util.GeradorDeContas;
+import Util.TextFieldFormatter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class ContaPoupancaController {
 
-	//CRIA NOVA CONTA POUPANCA
-	  @FXML
-	    private Button btnCriarCp;
+	// CRIA NOVA CONTA POUPANCA
+	@FXML
+	private Button btnCriarCp;
 
-	    @FXML
-	    private TextField txtCpfClienteNewCp;
+	@FXML
+	private TextField txtCpfClienteNewCp;
 
-	    @FXML
-	    private TextField txtSenhaNewCp;
+	@FXML
+	private PasswordField txtSenhaNewCp;
 
-	    @FXML
-	    private TextField txtDepInicialCp;
+	@FXML
+	private TextField txtDepInicialCp;
+	
+    @FXML
+    void tfMaskCpf() {
+    	TextFieldFormatter tff = new TextFieldFormatter();
+    	tff.setMask("###.###.###-##");
+    	tff.setCaracteresValidos("0123456789");
+    	tff.setTf(txtCpfClienteNewCp);
+    	tff.formatter();
 
-	    @FXML
-	    void novaContaPoupanca(ActionEvent event) {
-	    	GeradorDeContas gerador = new GeradorDeContas();
-			String cpf = txtCpfClienteNewCp.getText();
-			double valor = Double.parseDouble(txtDepInicialCp.getText());
-			String senha = txtSenhaNewCp.getText();
-			Cliente cliente = null;
-			ContaPoupancaDAO ccDao = new ContaPoupancaDAO();
-			ClienteDAO cliDao = new ClienteDAO();
-			if (!cpf.equals("")) {
-				try {
-					cliente = new ClienteDAO().buscaClienteByCPF(cpf);
+    }
+
+	@FXML
+	void novaContaPoupanca(ActionEvent event) {
+		String cpf = txtCpfClienteNewCp.getText();
+		cpf = cpf.replace(".", "");
+		cpf = cpf.replace("-", "");
+		double valor = Double.parseDouble(txtDepInicialCp.getText());
+		String senha = txtSenhaNewCp.getText();
+		ContaPoupancaDAO ccDao = new ContaPoupancaDAO();
+		ClienteDAO cliDao = new ClienteDAO();
+		Cliente cliente = cliDao.buscaClienteByCPF(cpf);
+		if (!cpf.equals("")) {
+			try {
+				if (cliDao.buscaClienteByCPF(cpf) != null) {
 					ContaPoupanca cp = new ContaPoupanca();
 					cp.setAgencia(9929);
-					cp.setNumConta(Integer.toString(gerador.geraConta()));
+					cp.setNumConta(GeradorDeContas.geraCp());
 					cp.setSaldo(valor);
 					cp.setIdCliente(cliente.getId());
 					cp.setSenha(senha);
 					ccDao.inserirCp(cp);
-				} catch (Exception e) {
-
+					cliDao.alteraStatus(cpf);
+					alerta("Sucesso!!!", "Parabéns!", "Conta aberta com sucesso!!!");
+					FXMLLoader fxmlLoader = new FXMLLoader(TelaPrincipalController.class.getResource("TelaPrincipal.fxml"));
+					Parent root1 = fxmlLoader.load();
+					Stage stage = new Stage();
+					stage.setScene(new Scene(root1));
+					stage.initStyle(StageStyle.UNDECORATED);
+					stage.show();
+					fecharTela(btnCriarCp);
+				} else {
+					alerta("Erro!!!", "O cpf informado não é de um cliente!",
+							"Antes de criar uma conta, crie um cliente!!!");
 				}
-			}
 
+			} catch (Exception e) {
+
+			}
 		}
 
-	    
-	
-	
+	}
+
 	// DEPOSITO
 
 	@FXML
@@ -70,15 +103,40 @@ public class ContaPoupancaController {
 	private TextField txtSenha;
 	
 	@FXML
+	private Button txtDepositaCp;
+
+	@FXML
 	void depositaCp(ActionEvent event) {
 		String conta = txtNumContaCp.getText();
 		double valor = Double.parseDouble(txtValorCpDep.getText());
 		ContaPoupancaDAO cpDao = new ContaPoupancaDAO();
 		ContaPoupanca cp = cpDao.findByConta(conta);
-		cpDao.depositaCP(cp, valor);
+		if(conta == "") {
+			alerta("Error!!!", "O deposito falhou!", "Por favor preencha o formulario!!!");
+		}
+		else {
+			if (cp != null) {
+				try {
+				cpDao.depositaCP(cp, valor);
+				alerta("Sucesso!!!", "Deposito!", "Deposito realizado com sucesso!!!");
+				FXMLLoader fxmlLoader = new FXMLLoader(TelaPrincipalController.class.getResource("TelaPrincipal.fxml"));
+				Parent root1 = fxmlLoader.load();
+				Stage stage = new Stage();
+				stage.setScene(new Scene(root1));
+				stage.initStyle(StageStyle.UNDECORATED);
+				stage.show();
+				fecharTela(txtDepositaCp);
+				}catch(IOException e) {
+					
+				}
+			} else {
+
+				alerta("Error!!!", "O deposito falhou!", "A conta informada não existe!!!");
+			}
+		}
+
 
 	}
-
 
 	// SACAR
 	@FXML
@@ -90,8 +148,8 @@ public class ContaPoupancaController {
 	@FXML
 	private TextField txtValorSaque;
 	@FXML
-	private TextField txtSenhaSaque;
-	
+	private PasswordField txtSenhaSaque;
+
 	@FXML
 	void sacarCp(ActionEvent event) {
 		String conta = txtNumContaSacar.getText();
@@ -100,16 +158,36 @@ public class ContaPoupancaController {
 		ContaPoupancaDAO cpDao = new ContaPoupancaDAO();
 		ContaPoupanca cp = cpDao.findByConta(conta);
 		if (cpDao.autentica(conta, senha)) {
-			cpDao.sacarCP(cp, valor);
 			System.out.println("Autenticado com sucesso!!!");
+			if (cp.getSaldo() < valor) {
+
+				alerta("Atenção!!!", "Saque falhou!", "O saldo é insuficiente para o saque.");
+			} else {
+				try {
+				cpDao.sacarCP(cp, valor);
+				alerta("Sucesso!!!", "Saque realizado!", "O dinheiro já foi debitado.");
+				FXMLLoader fxmlLoader = new FXMLLoader(TelaPrincipalController.class.getResource("TelaPrincipal.fxml"));
+				Parent root1 = fxmlLoader.load();
+				Stage stage = new Stage();
+				stage.setScene(new Scene(root1));
+				stage.initStyle(StageStyle.UNDECORATED);
+				stage.show();
+				fecharTela(btnSacar);
+				}catch(IOException e) {
+					
+				}
+
+			}
+
 		} else {
-			System.out.println("Falha na autenticação");
+			alerta("Error!!!", "Autenticação falhou!", "A senha esta incorreta ou sua conta não existem.");
 		}
 
 	}
+
 	//////////// TRANFERENCIA////////////
 	@FXML
-	private Button btnTranferir;
+	private Button btnTranferirCp;
 
 	@FXML
 	private Button btnSair;
@@ -123,7 +201,7 @@ public class ContaPoupancaController {
 	@FXML
 	private TextField txtcontaDestino;
 	@FXML
-	private TextField txtSenhaTranferencia;
+	private PasswordField txtSenhaTranferencia;
 
 	@FXML
 	void tranferir(ActionEvent event) {
@@ -134,43 +212,162 @@ public class ContaPoupancaController {
 		ContaPoupancaDAO cpDao = new ContaPoupancaDAO();
 		ContaPoupanca cpo = cpDao.findByConta(contaOrigem);
 		ContaPoupanca cpd = cpDao.findByConta(contaDestino);
-		if (cpDao.autentica(cpo.getNumConta(), senha)) {
-			cpDao.sacarCP(cpo, valor);
-			cpDao.depositaCP(cpd, valor);
+		if (cpo == null) {
+			alerta("Error!!!", "Conta inexistente!", "A conta de origem não existe.");
 		} else {
-			System.out.println("Tranferencia falhou na autenticação!!!");
+			if (contaDestino.equals(contaOrigem)) {
+				alerta("Error!!!", "Conta identicas!", "Você não pode tranferir para mesma conta.");
+
+			} else {
+				if (cpDao.autentica(contaOrigem, senha)) {
+					System.out.println("Autenticado com sucesso!!!");
+					if (cpd == null) {
+						alerta("Error!!!", "Tranferencia falhou!", "A conta destino não existe.");
+					} else {
+						if (cpo.getSaldo() < valor) {
+							alerta("Atenção!!!", "Tranferencia falhou!",
+									"O saldo é insuficiente para a transferencia.");
+
+						} else {
+							try {
+							cpDao.sacarCP(cpo, cpDao.tarifaTransferencia(valor));
+							cpDao.depositaCP(cpd, valor);
+							alerta("Sucesso!!!", "Tranferencia realizada com sucesso!",
+									"Tudo certo, o dinheiro está a caminho do destinatario!");
+							FXMLLoader fxmlLoader = new FXMLLoader(TelaPrincipalController.class.getResource("TelaPrincipal.fxml"));
+							Parent root1 = fxmlLoader.load();
+							Stage stage = new Stage();
+							stage.setScene(new Scene(root1));
+							stage.initStyle(StageStyle.UNDECORATED);
+							stage.show();
+							fecharTela(btnTranferirCp);
+							}catch(IOException e) {
+								
+							}
+						
+
+						}
+
+					}
+
+				} else {
+					alerta("Error!!!", "Autenticação falhou!", "A senha esta incorreta ou sua conta não existe.");
+				}
+
+			}
+
 		}
 
 	}
+	
+	// TRANFERENTE P/ CONTA POUPANÇA
+
+    @FXML
+    private TextField txtContaPoupancaTranfereCCorrente;
+
+    @FXML
+    private TextField txtCCorrenteTranfereContaPoupanca;
+    
+	@FXML
+	private TextField valorTranferenciaentreCcCp;
+
+	@FXML
+	private PasswordField txtPassCCcp;
+
+	@FXML
+	private Button btnTransfereCcCp;
+
+	@FXML
+	void transferenciaEntreContasCpParaCc(ActionEvent event) {
+		ContaCorrente cC = new ContaCorrente();
+		ContaPoupanca cP = new ContaPoupanca();
+		ContaPoupancaDAO cpDao = new ContaPoupancaDAO();
+		ContaCorrenteDAO ccDao = new ContaCorrenteDAO();
+
+		String cCorrente = txtCCorrenteTranfereContaPoupanca.getText();
+		String cPoupanca = txtContaPoupancaTranfereCCorrente.getText();
+		double valor = Double.parseDouble(valorTranferenciaentreCcCp.getText());
+		String senha = txtPassCCcp.getText();
+		
+		
+		cC = ccDao.findByNumeroConta(cCorrente);
+		cP = cpDao.findByConta(cPoupanca);
+		if (cC == null && cP == null) {
+
+			alerta("Error!!!", "Tranferencia falhou!", "Uma das contas informada é invalida!");
+
+		} else {
+			if (cpDao.autentica(cPoupanca, senha)) {
+				System.out.println("Autenticado com sucesso!!!");
+				if (cC == null) {
+					alerta("Error!!!", "Tranferencia falhou!", "A conta destino não existe.");
+				} else {
+					if (cP.getSaldo() < valor) {
+						alerta("Atenção!!!", "Tranferencia falhou!", "O saldo é insuficiente para a transferencia.");
+
+					} else {
+						try {
+						cpDao.sacarCP(cP, cpDao.tarifaTransferencia(valor));
+						ccDao.depositaCC(cC, valor);
+						alerta("Sucesso!!!", "Tranferencia realizada com sucesso!",
+								"Tudo certo, o dinheiro está a caminho do destinatario!");
+						FXMLLoader fxmlLoader = new FXMLLoader(TelaPrincipalController.class.getResource("TelaPrincipal.fxml"));
+						Parent root1 = fxmlLoader.load();
+						Stage stage = new Stage();
+						stage.setScene(new Scene(root1));
+						stage.initStyle(StageStyle.UNDECORATED);
+						stage.show();
+						fecharTela(btnTransfereCcCp);
+						}catch(IOException e) {
+							
+						}
+
+					}
+
+				}
+
+			} else {
+				alerta("Error!!!", "Autenticação falhou!", "A senha ou sua conta não existem.");
+			}
+		}
+	}
+	
+	
+    @FXML
+    void voltarInicio(ActionEvent event) {
+    	try {
+    		FXMLLoader fxmlLoader = new FXMLLoader(TelaPrincipalController.class.getResource("TelaPrincipal.fxml"));
+    		Parent root1 = fxmlLoader.load();
+    		Stage stage = new Stage();
+    		stage.setScene(new Scene(root1));
+    		stage.initStyle(StageStyle.UNDECORATED);
+    		stage.show();
+    		fecharTela(btnSair);
+    		
+   		
+    	}catch(IOException e) {
+    		
+    	}
+
+    }
 
 
+	// UTIL
 
+	private void alerta(String title, String text, String header) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(text);
+		alert.showAndWait();
 
-
-//	@FXML
-//	void novaContaPoupanca(ActionEvent event) {
-//		GeradorDeContas gerador = new GeradorDeContas();
-//		String cpf = txtNumContaCp.getText();
-//		double valor = Double.parseDouble(txtValorCpDep.getText());
-//		String senha = txtSenha.getText();
-//		Cliente cliente = null;
-//		ContaPoupancaDAO ccDao = new ContaPoupancaDAO();
-//		ClienteDAO cliDao = new ClienteDAO();
-//		if (!cpf.equals("")) {
-//			try {
-//				cliente = new ClienteDAO().buscaClienteByCPF(cpf);
-//				ContaPoupanca cp = new ContaPoupanca();
-//				cp.setAgencia(9929);
-//				cp.setNumConta(Integer.toString(gerador.geraConta()));
-//				cp.setSaldo(valor);
-//				cp.setIdCliente(cliente.getId());
-//				cp.setSenha(senha);
-//				ccDao.inserirCp(cp);
-//			} catch (Exception e) {
-//
-//			}
-//		}
-//
-//	}
+	}
+	
+    public void fecharTela(Button btnFechar) {
+        Stage stage = (Stage) btnFechar.getScene().getWindow();
+        stage.close();
+    }
+    
+    
 
 }

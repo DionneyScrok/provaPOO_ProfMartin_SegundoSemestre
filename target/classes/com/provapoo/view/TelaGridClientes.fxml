@@ -8,17 +8,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ListaClientesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="652.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.provapoo.view.ListaClientesController">
    <children>
-      <Button fx:id="btnAtualizar" layoutX="14.0" layoutY="79.0" mnemonicParsing="false" onAction="#listarClientes" text="ATUALIZAR" />
-      <Label layoutX="129.0" layoutY="14.0" text="Lista de Clientes" textFill="#007c3a">
+      <Button fx:id="btnAtualizar" layoutX="95.0" layoutY="28.0" mnemonicParsing="false" onAction="#listarClientes" text="ATUALIZAR" />
+      <Label layoutX="184.0" layoutY="14.0" text="Lista de Clientes" textFill="#007c3a">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <TextField fx:id="txtBuscarCPF" layoutX="298.0" layoutY="79.0" />
-      <Label layoutX="269.0" layoutY="83.0" text="CPF: " />
-      <TableView fx:id="tvClientes" layoutX="11.0" layoutY="111.0" prefHeight="317.0" prefWidth="508.0">
+      <TableView fx:id="tvClientes" layoutX="24.0" layoutY="227.0" prefHeight="411.0" prefWidth="577.0">
         <columns>
           <TableColumn fx:id="columnNome" prefWidth="71.0" text="Nome" />
           <TableColumn fx:id="columnCpf" prefWidth="79.0" text="Cpf" />
@@ -26,9 +24,26 @@
             <TableColumn fx:id="columnEmail" prefWidth="75.0" text="Email" />
             <TableColumn fx:id="columnEndereco" prefWidth="119.0" text="Endereço" />
             <TableColumn fx:id="columnTelefone" prefWidth="75.0" text="Telefone" />
+            <TableColumn fx:id="columnStatus" prefWidth="75.0" text="Status" />
         </columns>
       </TableView>
-      <Button fx:id="btnEditarCliente" layoutX="102.0" layoutY="79.0" mnemonicParsing="false" onAction="#chamaTelaEdicaoCliente" text="EDITAR" />
-      <Button fx:id="btnExcluir" layoutX="169.0" layoutY="79.0" mnemonicParsing="false" onAction="#excluir" text="EXCLUIR" />
+      <Button fx:id="btnEditarCliente" layoutX="455.0" layoutY="28.0" mnemonicParsing="false" onAction="#chamarEditar" text="EDITAR" />
+      <Button fx:id="btnExcluir" layoutX="517.0" layoutY="28.0" mnemonicParsing="false" onAction="#excluir" text="EXCLUIR" />
+      <Button fx:id="btnPesquisar" layoutX="533.0" layoutY="194.0" mnemonicParsing="false" onAction="#pesquisarCliente" prefHeight="25.0" prefWidth="67.0" text="Pesquisar" />
+      <TextField fx:id="tfNome" layoutX="66.0" layoutY="85.0" />
+      <TextField fx:id="tfCpf" layoutX="66.0" layoutY="123.0" />
+      <TextField fx:id="tfProfissao" layoutX="66.0" layoutY="163.0" />
+      <TextField fx:id="tfEmail" layoutX="289.0" layoutY="84.0" />
+      <TextField fx:id="tfEndereco" layoutX="289.0" layoutY="123.0" />
+      <TextField fx:id="tfTelefone" layoutX="289.0" layoutY="163.0" onKeyReleased="#tfMaskTelefone" />
+      <Label fx:id="lblNome" layoutX="22.0" layoutY="89.0" text="Nome:" />
+      <Label fx:id="lblcpf" layoutX="30.0" layoutY="127.0" text="Cpf:" />
+      <Label fx:id="lblprofissao" layoutX="4.0" layoutY="167.0" text="Profissão:" />
+      <Label fx:id="lblemail" layoutX="252.0" layoutY="88.0" text="Email:" />
+      <Label fx:id="lblendreco" layoutX="231.0" layoutY="127.0" text="Endereço:" />
+      <Label fx:id="lbltelefone" layoutX="233.0" layoutY="167.0" text="Telefone:" />
+      <Button fx:id="btnConfimarEdicao" layoutX="466.0" layoutY="95.0" mnemonicParsing="false" onAction="#editar" prefHeight="53.0" prefWidth="61.0" text="Confima" />
+      <TextField fx:id="txtBuscarCPF" layoutX="379.0" layoutY="194.0" onKeyReleased="#tfMaskCpf" />
+      <Label layoutX="348.0" layoutY="198.0" text="Cpf:" />
    </children>
 </AnchorPane>

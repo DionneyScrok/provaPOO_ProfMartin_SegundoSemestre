@@ -12,6 +12,8 @@ public class ContaCorrente extends  Conta{
 		super(id, saldo, agencia, numConta, idCliente, titular, senha);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 
 

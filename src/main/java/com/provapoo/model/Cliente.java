@@ -1,5 +1,7 @@
 package com.provapoo.model;
 
+import com.ClienteTabela.ClienteTabela;
+
 public class Cliente {
 
 	private int id;
@@ -9,9 +11,10 @@ public class Cliente {
 	private String email;
 	private String endereco;
 	private String telefone;
+	private String status = "Inativo";
 
-	public Cliente(String nome, String cpf, String profissao, String email, String endereco, String telefone) {
-		super();
+
+	public Cliente(String nome, String cpf, String profissao, String email, String endereco, String telefone) {		
 		this.nome = nome;
 		this.cpf = cpf;
 		this.profissao = profissao;
@@ -20,6 +23,17 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
+
+
+	public Cliente(ClienteTabela clienteTabela) {
+		this.nome = clienteTabela.getNome();
+		this.cpf = clienteTabela.getCpf();
+		this.profissao = clienteTabela.getProfissao();
+		this.email = clienteTabela.getEmail();
+		this.endereco = clienteTabela.getEndereco();
+		this.telefone = clienteTabela.getTelefone();
+		
+	}
 	public Cliente() {
 
 	}
@@ -79,5 +93,14 @@ public class Cliente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 
 }
