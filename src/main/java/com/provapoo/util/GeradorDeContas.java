@@ -1,4 +1,4 @@
-package Util;
+package com.provapoo.util;
 
 import java.util.Random;
 

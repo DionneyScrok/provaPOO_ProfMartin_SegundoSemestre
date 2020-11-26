@@ -11,8 +11,7 @@ import com.provapoo.db.ConexaoHSQLDB;
 import com.provapoo.model.Cliente;
 
 public class ClienteDAO extends ConexaoHSQLDB {
-	final String Insert_SQL_Cliente = " INSERT INTO Cliente (nome, cpf, profissao, email, endereco, telefone, status ) VALUES (?, ?, ?, ?, ?, ?, ?) ";
-	final String Insert_SQL_ContaCorrente = " INSERT INTO ContaCorrente (saldo, agencia, numConta) VALUES (?, ?, ? ) ";
+	final String Insert_SQL_Cliente = " INSERT INTO Cliente (nome, cpf, profissao, email, endereco, telefone, status ) VALUES (?, ?, ?, ?, ?, ?, ?) ";	
 	final String SQL_SELECT = " SELECT * FROM Cliente ";
 	final String SQL_ALTERA_CLIENTE = " UPDATE Cliente SET NOME =?, CPF =?, profissao =?, email =?, endereco =?, telefone =?  WHERE cpf =? ";
 	final String SQL_FIND_CPFCliente = "Select * FROM Cliente WHERE cpf =?";
@@ -57,6 +56,7 @@ public class ClienteDAO extends ConexaoHSQLDB {
 				cli.setEndereco(rs.getString("endereco"));
 				cli.setTelefone(rs.getString("telefone"));
 				cli.setProfissao(rs.getString("profissao"));
+				cli.setStatus(rs.getNString("status"));
 
 			}
 		} catch (SQLException e) {
